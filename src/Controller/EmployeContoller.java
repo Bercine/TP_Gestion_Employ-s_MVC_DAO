@@ -28,7 +28,6 @@ public class EmployeContoller {
             Role role=view.getRole();
             Poste poste=view.getPoste();
             double s; 
-
             try {
                 s=view.getSalaire();
             } catch (NumberFormatException ex) {
@@ -36,6 +35,7 @@ public class EmployeContoller {
                 view.afficherMessageErreur("Le salaire doit etre un nombre valide");
                 return;
             } 
+
             //Une variable pour vérifier la validité des informations
             boolean ajoutReussi=model.ajouterEmploye(n,p,e,t,s,role,poste);
 
@@ -44,22 +44,25 @@ public class EmployeContoller {
             }else{
                 view.afficherMessageErreur("Echec de l'ajout de l'employe. Verifiez les donnees.");
             }
+                afficherEmploye();
         }
 
         //modifier un employe
         public void modifierEmploye(){
             //récupérer l'id de l'employé sélectionné au niveau de view
             int id=view.getSelectedEmployeeId();
+            //la méthode setFieldsIfClicked() remplit automatiquement les champs par les attributs de l'employé sélectionné
 
             //modifier l'employe grace à la méthode modifierEmployeParSonId(int id) du model
             boolean modificationReussi=model.modifierEmployeParSonId(id,view);
 
             //messages pour informer sur l'etat de la modification
             if(modificationReussi){
-                view.afficherMessageSucces("MOdifie");
+                view.afficherMessageSucces("Modifie");
             }else{
                 view.afficherMessageErreur("Erreur de modification");
             }
+            afficherEmploye();
         }
 
         //supprimer l'employé dont l'id a été retourné
@@ -76,13 +79,12 @@ public class EmployeContoller {
            }else{
             view.afficherMessageErreur("Erreur de supression");
            }
+           afficherEmploye();
         }
 
         //afficher les employés
         public void afficherEmploye(){
-                view.afficher();
+            view.resetFields();
+                view.afficherTableau();
         }
-
-        
-        
 }

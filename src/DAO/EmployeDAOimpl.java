@@ -1,3 +1,4 @@
+
 package DAO;
 
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ public class EmployeDAOimpl implements EmployeDAOI {
     @Override
     public void inserer(Employe e) {
         // Requête d'insertion
-        String requete = "INSERT INTO employe(nom_employe, prenom_employe, email_employe, telephone_employe, salaire_employe, role_employe, poste_employe) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String requete = "INSERT INTO employe(nom_employe, prenom_employe, email_employe, telephone_employe, salaire_employe, nom_role, nom_poste) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         // Préparer et exécuter la requête
         try (PreparedStatement stmt = Connexion.getConnexion().prepareStatement(requete)) {
@@ -38,7 +39,7 @@ public class EmployeDAOimpl implements EmployeDAOI {
     @Override
     public void modifier(EmployeView eview) {
         // Requête de mise à jour en utilisant l'ID comme identifiant unique
-        String requete = "UPDATE employe SET nom_employe = ?, prenom_employe = ?, email_employe = ?, telephone_employe = ?, salaire_employe = ?, role_employe = ?, poste_employe = ? WHERE id_employe = ?";
+        String requete = "UPDATE employe SET nom_employe = ?, prenom_employe = ?, email_employe = ?, telephone_employe = ?, salaire_employe = ?, nom_role = ?, nom_poste = ? WHERE id_employe = ?";
 
         // Préparer et exécuter la requête
         try (PreparedStatement stmt = Connexion.getConnexion().prepareStatement(requete)) {
@@ -90,8 +91,8 @@ public class EmployeDAOimpl implements EmployeDAOI {
                 String email = rs.getString("email_employe");
                 String telephone = rs.getString("telephone_employe");
                 double salaire = rs.getDouble("salaire_employe");
-                Role role = Role.valueOf(rs.getString("role_employe"));
-                Poste poste = Poste.valueOf(rs.getString("poste_employe"));
+                Role role = Role.valueOf(rs.getString("nom_role"));
+                Poste poste = Poste.valueOf(rs.getString("nom_poste"));
 
                 // Ajouter un nouvel Employé à la liste
                 l.add(new Employe(id, nom, prenom, email, telephone, salaire, role, poste));
@@ -106,21 +107,39 @@ public class EmployeDAOimpl implements EmployeDAOI {
     @Override
     public List<Role> findAllRole() {
         List<Role> roles = new ArrayList<>();
-        // Ajouter toutes les valeurs de l'énumération Role à la liste
-        for (Role role : Role.values()) {
-            roles.add(role);
+        //requete pour sélectionner les valeurs depuis la base de données
+        String requete="SELECT * FROM role";
+        try(PreparedStatement stmt = Connexion.getConnexion().prepareStatement(requete)) {
+            ResultSet rs=stmt.executeQuery();
+            while (rs.next()) {
+                String nom_role=rs.getString("nom_role");
+                roles.add(Role.valueOf(nom_role));
+            }
+        } catch (SQLException ex) {
+            // TODO: handle exception
+            ex.printStackTrace();
         }
         return roles;
     }
 
-    // Méthode pour récupérer les postes
+    // Méthode pour récupérer les rôles
     @Override
     public List<Poste> findAllPoste() {
         List<Poste> postes = new ArrayList<>();
-        // Ajouter toutes les valeurs de l'énumération Poste à la liste
-        for (Poste poste : Poste.values()) {
-            postes.add(poste);
+        //requete pour sélectionner les valeurs depuis la base de données
+        String requete="SELECT * FROM poste";
+        try(PreparedStatement stmt = Connexion.getConnexion().prepareStatement(requete)) {
+            ResultSet rs=stmt.executeQuery();
+            while (rs.next()) {
+                String nom_poste=rs.getString("nom_poste");
+                postes.add(Poste.valueOf(nom_poste));
+            }
+        } catch (SQLException ex) {
+            // TODO: handle exception
+            ex.printStackTrace();
         }
         return postes;
     }
+
+    
 }

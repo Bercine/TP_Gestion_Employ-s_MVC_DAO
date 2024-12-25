@@ -1,16 +1,10 @@
-import Controller.EmployeContoller;
-import DAO.EmployeDAOimpl;
-import Model.EmployeModel;
-import View.EmployeView;
+
+import View.MainView;
 
 public class Main {
     public static void main(String[] args) {
-
-        EmployeView view=new EmployeView();
-        EmployeDAOimpl dao=new EmployeDAOimpl();
-        EmployeModel model=new EmployeModel(dao);
-        new EmployeContoller(model, view);
-        view.setVisible(true);
+      MainView mview=  new MainView();
+      mview.setVisible(true);
     }
  
 }

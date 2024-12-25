@@ -22,7 +22,7 @@ public class EmployeModel {
         //et on insere l'employé
         dao.inserer(emp);
         return true;
-    }
+    } 
 
     //supprimer l'employé dont l'id est passé en paramètre
     public boolean supprimerEmployeParSonId(int id){

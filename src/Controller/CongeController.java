@@ -10,6 +10,7 @@ public class CongeController {
       //attributs
         private CongeModel cmodel;
         private CongeView cview; 
+        private EmployeModel emodel;
 
     //Constructeur
     public CongeController(CongeModel m,CongeView v){
@@ -27,11 +28,11 @@ public class CongeController {
         
         //Une variable pour vérifier la validité des informations
         boolean ajoutReussi=cmodel.ajoutConge( cview,id_employe);
-
+        
         if(ajoutReussi){
-            cview.afficherMessageSucces("Employe ajoute avec succes !");
+            cview.afficherMessageSucces("Conge ajoute avec succes !");
         }else{
-            cview.afficherMessageErreur("Echec de l'ajout de l'employe. Verifiez les donnees.");
+            cview.afficherMessageErreur("Echec de l'ajout du conge. Verifiez les donnees.");
         }
             afficherConge();
     }
@@ -67,6 +68,8 @@ public class CongeController {
        }else{
         cview.afficherMessageErreur("Erreur de supression");
        }
+
+       emodel.recuperer_liste_employe();
        afficherConge();
     }
 

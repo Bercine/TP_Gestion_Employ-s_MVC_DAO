@@ -14,11 +14,11 @@ import Model.TypeConge;
 import View.CongeView;
 
 public class CongeDAOimpl implements CongeDAOI {
-    
+
     // Insérer un congé
+
     @Override
     public void inserer(CongeView cv,int employeId) {
-        
         // Vérifier si un employé a été sélectionné
         if (employeId == -1) {
             cv.afficherMessageErreur("Veuillez sélectionner un employé.");
@@ -27,13 +27,11 @@ public class CongeDAOimpl implements CongeDAOI {
         
         // Récupérer le nom de l'employé à partir de la table employe en utilisant l'ID
         String nomEmploye = null;
-        String nomRequete = "SELECT nom_employe FROM employe WHERE id_employe = ?";
+        String nomRequete = "SELECT nom_employe FROM employe WHERE id_employe = "+employeId+"";
         
         try (Connection conn = Connexion.getConnexion();
              PreparedStatement stmt = conn.prepareStatement(nomRequete)) {
-            
-            stmt.setInt(1, employeId);
-            
+
             // Exécuter la requête et récupérer le nom
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -66,13 +64,10 @@ public class CongeDAOimpl implements CongeDAOI {
     // Supprimer un congé par ID
     @Override
     public void supprmier(int id) {
-        String requete = "DELETE FROM conge WHERE id_conge = ?";
+        String requete = "DELETE FROM conge WHERE id_conge = "+id;
 
         try (Connection conn = Connexion.getConnexion();
              PreparedStatement stmt = conn.prepareStatement(requete)) {
-
-            // Préparer la requête avec l'ID
-            stmt.setInt(1, id);
 
             // Exécuter la requête
             stmt.executeUpdate();
@@ -86,7 +81,7 @@ public class CongeDAOimpl implements CongeDAOI {
     @Override
     public List<Conge> recuperer_liste_conge() {
         List<Conge> listeConge = new ArrayList<>();
-        String requete = "SELECT c.id_conge, e.nom_employe, c.date_debut, c.date_fin, c.nom_type_conge FROM conge c JOIN employe e ON c.id_employe = e.id_employe JOIN typeConge t ON c.nom_type_conge = t.nom_type_conge";
+        String requete = "SELECT id_conge, id_employe, nom_employe, date_debut, date_fin, nom_type_conge FROM conge";
 
         try (PreparedStatement stmt = Connexion.getConnexion().prepareStatement(requete);) {
              ResultSet rs = stmt.executeQuery();

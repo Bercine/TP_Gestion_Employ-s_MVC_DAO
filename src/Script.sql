@@ -21,7 +21,6 @@ CREATE TABLE poste(
 INSERT INTO poste(nom_poste) VALUES('INGENIEUR_ETUDE_ET_DEVELOPPEMENT'),
                                     ('TEAM_LEADER'),
                                     ('PILOTE');
-
 -- créer la table employé
 CREATE TABLE employe(
     id_employe INTEGER PRIMARY KEY AUTO_INCREMENT,

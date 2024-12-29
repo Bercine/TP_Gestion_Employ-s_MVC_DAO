@@ -3,11 +3,13 @@ package Controller;
 
 import Model.*;
 import View.EmployeView;
+import View.CongeView;
 
 public class EmployeContoller {
         //attributs
         private EmployeModel model;
         private EmployeView view;
+
 
         //Constructeur
         public EmployeContoller(EmployeModel m,EmployeView v){
@@ -15,8 +17,8 @@ public class EmployeContoller {
             this.view=v;
             this.view.ajouter.addActionListener(aj ->ajouterEmploye());
             this.view.modifier.addActionListener(modif ->modifierEmploye());
-           this.view.supprimer.addActionListener(s -> supprimerEmployeParSonId());
-           this.view.afficher.addActionListener(af -> afficherEmploye());
+            this.view.supprimer.addActionListener(s -> supprimerEmployeParSonId());
+            this.view.afficher.addActionListener(af -> afficherEmploye());
         }
 
         //ajouterEmploye()

@@ -1,5 +1,8 @@
 
 package Model;
+import java.util.List;
+import java.util.ArrayList;
+
 import DAO.EmployeDAOimpl;
 import View.EmployeView;
 
@@ -36,5 +39,14 @@ public class EmployeModel {
         if(id<0)return false;
         dao.modifier(e);
         return true;
+    }
+
+    public List<Employe> recuperer_liste_employe(){
+        List<Employe> l=new ArrayList<>();
+        l=dao.recuperer_liste_employe();
+
+
+
+        return l;
     }
 }

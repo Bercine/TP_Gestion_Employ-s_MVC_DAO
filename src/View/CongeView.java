@@ -116,7 +116,8 @@ public class CongeView extends JFrame {
         // Initialisation des panels avec des layouts spécifiques
         p1.setLayout(new GridLayout(4, 2));
         p2.setLayout(new FlowLayout());
-        p3.setLayout(new FlowLayout());
+
+        System.out.println("Hello world");
 
         // Remplissage de la JComboBox des employes avec leurs noms uniquement
         listeEmployes.removeAllItems();  // Eviter les doublons
@@ -150,6 +151,14 @@ public class CongeView extends JFrame {
         setSize(600, 400);
     }
 
+    public CongeView(List<Employe> l){
+        this.EmployeListe=l;
+        // Remplissage de la JComboBox des employes avec leurs noms uniquement
+        listeEmployes.removeAllItems();  // Eviter les doublons
+        for (Employe e : l) {
+            listeEmployes.addItem(e.getNom());  // Ajouter uniquement le nom de l'employé
+        }
+    }
     // Méthode pour récupérer l'ID de la ligne sélectionnée dans le tableau
     public int getSelectedCongeId() {
         int selectedRow = table.getSelectedRow(); // Récupérer la ligne sélectionnée
